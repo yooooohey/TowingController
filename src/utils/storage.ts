@@ -125,12 +125,36 @@ export function sortReservationsByTime(reservations: Reservation[]): Reservation
   });
 }
 
+let inMemoryFallback: string | null = null;
+
+function safeGetStorageItem(key: string): string | null {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return window.localStorage.getItem(key);
+    }
+  } catch (err) {
+    console.warn('localStorage read error, falling back to in-memory:', err);
+  }
+  return inMemoryFallback;
+}
+
+function safeSetStorageItem(key: string, value: string): void {
+  inMemoryFallback = value;
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(key, value);
+    }
+  } catch (err) {
+    console.warn('localStorage write error:', err);
+  }
+}
+
 /**
  * Loads state from localStorage or falls back to initial state
  */
 export function loadAppState(): TowInAppState {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = safeGetStorageItem(STORAGE_KEY);
     if (!raw) {
       return getInitialAppState();
     }
@@ -182,7 +206,7 @@ export function saveAppState(state: TowInAppState): void {
         reservations: sortReservationsByTime(col.reservations),
       })),
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+    safeSetStorageItem(STORAGE_KEY, JSON.stringify(stateToSave));
   } catch (err) {
     console.error('Failed to save state to localStorage:', err);
   }

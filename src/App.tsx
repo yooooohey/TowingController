@@ -11,6 +11,7 @@ import { ReservationBoard } from './components/ReservationBoard';
 import { ReservationModal } from './components/ReservationModal';
 import { SettingsDrawer } from './components/SettingsDrawer';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 export default function App() {
   const [appState, setAppState] = useState<TowInAppState>(() => loadAppState());
@@ -287,59 +288,61 @@ export default function App() {
   const currentTargetCol = appState.columns.find((c) => c.id === modalTargetColumnId) || appState.columns[0];
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-slate-950 text-slate-100 font-sans select-none">
-      {/* Header */}
-      <Header
-        onOpenSettings={() => setIsSettingsOpen(true)}
-        version={appState.version}
-      />
+    <ErrorBoundary>
+      <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-slate-950 text-slate-100 font-sans select-none">
+        {/* Header */}
+        <Header
+          onOpenSettings={() => setIsSettingsOpen(true)}
+          version={appState.version}
+        />
 
-      {/* Main Reservation Board */}
-      <ReservationBoard
-        columns={appState.columns}
-        onAddReservation={handleOpenAddModal}
-        onEditReservation={handleOpenEditModal}
-        onMoveReservation={handleMoveReservation}
-        onSwapStaffHeaders={handleSwapStaffHeaders}
-        onSwapJetHeaders={handleSwapJetHeaders}
-      />
+        {/* Main Reservation Board */}
+        <ReservationBoard
+          columns={appState.columns}
+          onAddReservation={handleOpenAddModal}
+          onEditReservation={handleOpenEditModal}
+          onMoveReservation={handleMoveReservation}
+          onSwapStaffHeaders={handleSwapStaffHeaders}
+          onSwapJetHeaders={handleSwapJetHeaders}
+        />
 
-      {/* Add / Edit Reservation Modal Dialog */}
-      <ReservationModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        targetColumnId={modalTargetColumnId}
-        targetColumnStaff={currentTargetCol.staffName}
-        targetColumnJet={currentTargetCol.jetName}
-        editingReservation={editingReservation}
-        onSave={handleSaveReservation}
-        onDelete={handleDeleteReservation}
-      />
+        {/* Add / Edit Reservation Modal Dialog */}
+        <ReservationModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          targetColumnId={modalTargetColumnId}
+          targetColumnStaff={currentTargetCol.staffName}
+          targetColumnJet={currentTargetCol.jetName}
+          editingReservation={editingReservation}
+          onSave={handleSaveReservation}
+          onDelete={handleDeleteReservation}
+        />
 
-      {/* Settings Drawer (Hamburger menu) */}
-      <SettingsDrawer
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        columns={appState.columns}
-        version={appState.version}
-        onUpdateColumnsMeta={handleUpdateColumnsMeta}
-        onResetToSampleData={handleResetToSampleData}
-        onClearAllReservations={handleClearAllReservations}
-        onImportData={handleImportData}
-        onExportData={handleExportData}
-      />
+        {/* Settings Drawer (Hamburger menu) */}
+        <SettingsDrawer
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          columns={appState.columns}
+          version={appState.version}
+          onUpdateColumnsMeta={handleUpdateColumnsMeta}
+          onResetToSampleData={handleResetToSampleData}
+          onClearAllReservations={handleClearAllReservations}
+          onImportData={handleImportData}
+          onExportData={handleExportData}
+        />
 
-      {/* Offline Status Badge */}
-      <OfflineIndicator />
+        {/* Offline Status Badge */}
+        <OfflineIndicator />
 
-      {/* Floating feedback toast */}
-      {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 pointer-events-none animate-bounce">
-          <div className="px-4 py-2.5 rounded-xl bg-cyan-600/95 backdrop-blur-md text-white text-xs font-bold shadow-2xl border border-cyan-400/40">
-            {toastMessage}
+        {/* Floating feedback toast */}
+        {toastMessage && (
+          <div className="fixed bottom-5 right-5 z-50 pointer-events-none animate-bounce">
+            <div className="px-4 py-2.5 rounded-xl bg-cyan-600/95 backdrop-blur-md text-white text-xs font-bold shadow-2xl border border-cyan-400/40">
+              {toastMessage}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </ErrorBoundary>
   );
 }
