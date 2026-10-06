@@ -1,0 +1,131 @@
+/**
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// If the loader is already loaded, just stop.
+if (!self.define) {
+  let registry = {};
+
+  // Used for `eval` and `importScripts` where we can't get script URL by other means.
+  // In both cases, it's safe to use a global var because those functions are synchronous.
+  let nextDefineUri;
+
+  const singleRequire = (uri, parentUri) => {
+    uri = new URL(uri + ".js", parentUri).href;
+    return registry[uri] || (
+      
+        new Promise(resolve => {
+          if ("document" in self) {
+            const script = document.createElement("script");
+            script.src = uri;
+            script.onload = resolve;
+            document.head.appendChild(script);
+          } else {
+            nextDefineUri = uri;
+            importScripts(uri);
+            resolve();
+          }
+        })
+      
+      .then(() => {
+        let promise = registry[uri];
+        if (!promise) {
+          throw new Error(`Module ${uri} didn’t register its module`);
+        }
+        return promise;
+      })
+    );
+  };
+
+  self.define = (depsNames, factory) => {
+    const uri = nextDefineUri || ("document" in self ? document.currentScript.src : "") || location.href;
+    if (registry[uri]) {
+      // Module is already loading or loaded.
+      return;
+    }
+    let exports = {};
+    const require = depUri => singleRequire(depUri, uri);
+    const specialDeps = {
+      module: { uri },
+      exports,
+      require
+    };
+    registry[uri] = Promise.all(depsNames.map(
+      depName => specialDeps[depName] || require(depName)
+    )).then(deps => {
+      factory(...deps);
+      return exports;
+    });
+  };
+}
+define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
+
+  self.skipWaiting();
+  workbox.clientsClaim();
+  /**
+   * The precacheAndRoute() method efficiently caches and responds to
+   * requests for URLs in the manifest.
+   * See https://goo.gl/S9QRab
+   */
+  workbox.precacheAndRoute([{
+    "url": "pwa-maskable-512x512.png",
+    "revision": "04cc98a9a0b453910c339f1bbff2bb98"
+  }, {
+    "url": "pwa-512x512.png",
+    "revision": "04cc98a9a0b453910c339f1bbff2bb98"
+  }, {
+    "url": "pwa-192x192.png",
+    "revision": "6a087d6e30fc0a06bdb45f803f36d1a5"
+  }, {
+    "url": "index.html",
+    "revision": "c736cb2326a6dae792cf1c1db03d19d9"
+  }, {
+    "url": "icon.svg",
+    "revision": "e8b314fe2f97d54d5fe6eaee1ce1a60f"
+  }, {
+    "url": "apple-touch-icon.png",
+    "revision": "9f90f08723ef9460d0db9d1d7df1d1ba"
+  }, {
+    "url": "assets/workbox-window.prod.es5-Bd17z0YL.js",
+    "revision": null
+  }, {
+    "url": "assets/virtual_pwa-register-CWing3At.js",
+    "revision": null
+  }, {
+    "url": "assets/index-Dz-2E8Vj.css",
+    "revision": null
+  }, {
+    "url": "assets/index-C9gXmkwP.js",
+    "revision": null
+  }, {
+    "url": "apple-touch-icon.png",
+    "revision": "9f90f08723ef9460d0db9d1d7df1d1ba"
+  }, {
+    "url": "icon.svg",
+    "revision": "e8b314fe2f97d54d5fe6eaee1ce1a60f"
+  }, {
+    "url": "pwa-192x192.png",
+    "revision": "6a087d6e30fc0a06bdb45f803f36d1a5"
+  }, {
+    "url": "pwa-512x512.png",
+    "revision": "04cc98a9a0b453910c339f1bbff2bb98"
+  }, {
+    "url": "pwa-maskable-512x512.png",
+    "revision": "04cc98a9a0b453910c339f1bbff2bb98"
+  }, {
+    "url": "manifest.webmanifest",
+    "revision": "b9287439fa3b939e57540ad65f6a0bc9"
+  }], {});
+  workbox.cleanupOutdatedCaches();
+  workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html")));
+
+}));
