@@ -239,6 +239,35 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
               </label>
             </div>
 
+            {/* Force Refresh & Clear Cache */}
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (const reg of registrations) {
+                      await reg.unregister();
+                    }
+                  }
+                  if ('caches' in window) {
+                    const keys = await caches.keys();
+                    for (const key of keys) {
+                      await caches.delete(key);
+                    }
+                  }
+                } catch {
+                  // Ignore
+                }
+                window.location.reload();
+              }}
+              className="w-full flex items-center justify-center gap-2 p-2.5 rounded-xl bg-cyan-950/60 hover:bg-cyan-900/80 border border-cyan-600/70 text-xs font-bold text-cyan-200 transition active:scale-98 shadow-sm"
+              title="端末に保存された古いキャッシュやPWAデータを消去して最新バージョンを読み込みます"
+            >
+              <RotateCcw className="w-4 h-4 text-cyan-400" />
+              <span>最新版へ強制更新（キャッシュ削除）</span>
+            </button>
+
             {/* Clear today's reservations */}
             {confirmClear ? (
               <div className="p-3 rounded-xl bg-red-950/80 border border-red-500/50 space-y-2">

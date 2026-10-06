@@ -10,13 +10,10 @@ export default defineConfig(() => {
     plugins: [
       {
         name: 'vite-dev-html',
-        transformIndexHtml(html, ctx) {
-          if (ctx.server) {
-            return html
-              .replace(/<script type="module" crossorigin src="[^"]+"><\/script>/, '<script type="module" src="/src/main.tsx"></script>')
-              .replace(/<link rel="stylesheet" crossorigin href="[^"]+">/, '');
-          }
-          return html;
+        transformIndexHtml(html) {
+          return html
+            .replace(/<script type="module"[^>]*src="[^"]*app\.js"[^>]*><\/script>/, '<script type="module" src="/src/main.tsx"></script>')
+            .replace(/<link rel="stylesheet"[^>]*style\.css"[^>]*>/, '');
         },
       },
       react(),
@@ -25,7 +22,7 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: ['apple-touch-icon.png', 'icon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
         manifest: {
-          id: 'towing-controller-v2',
+          id: 'towing-controller-v17',
           name: 'トーインコントローラー',
           short_name: 'トーイン',
           description: 'マリンジェットを用いたトーイングアクティビティの予約管理',
@@ -57,6 +54,8 @@ export default defineConfig(() => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          skipWaiting: true,
+          clientsClaim: true,
         },
         devOptions: {
           enabled: true,

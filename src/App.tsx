@@ -37,6 +37,13 @@ export default function App() {
     saveAppState(appState);
   }, [appState]);
 
+  // Ensure version is always upgraded to current 1.7
+  useEffect(() => {
+    if (appState.version !== '1.7') {
+      setAppState((prev) => ({ ...prev, version: '1.7' }));
+    }
+  }, [appState.version]);
+
   // Open modal for adding new reservation to a specific column
   const handleOpenAddModal = (columnId: string) => {
     setModalTargetColumnId(columnId);
@@ -270,7 +277,7 @@ export default function App() {
       }));
 
       const newState: TowInAppState = {
-        version: parsed.version || '1.6',
+        version: parsed.version || '1.7',
         swipeMinutes: parsed.swipeMinutes || 5,
         columns: safeColumns,
       };
@@ -293,7 +300,7 @@ export default function App() {
         {/* Header */}
         <Header
           onOpenSettings={() => setIsSettingsOpen(true)}
-          version={appState.version}
+          version="1.7"
         />
 
         {/* Main Reservation Board */}
@@ -323,7 +330,7 @@ export default function App() {
           isOpen={isSettingsOpen}
           onClose={() => setIsSettingsOpen(false)}
           columns={appState.columns}
-          version={appState.version}
+          version="1.7"
           onUpdateColumnsMeta={handleUpdateColumnsMeta}
           onResetToSampleData={handleResetToSampleData}
           onClearAllReservations={handleClearAllReservations}

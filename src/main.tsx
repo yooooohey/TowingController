@@ -13,10 +13,11 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   import('virtual:pwa-register')
     .then(({ registerSW }) => {
       try {
-        registerSW({
+        const updateSW = registerSW({
           immediate: true,
           onNeedRefresh() {
-            console.log('New content available, updating service worker...');
+            console.log('New version available, refreshing to latest...');
+            updateSW(true);
           },
           onOfflineReady() {
             console.log('App ready to work offline');

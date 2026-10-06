@@ -77,9 +77,6 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
-    "url": "registerSW.js",
-    "revision": "402b66900e731ca748771b6fc5e7a068"
-  }, {
     "url": "pwa-maskable-512x512.png",
     "revision": "04cc98a9a0b453910c339f1bbff2bb98"
   }, {
@@ -90,7 +87,7 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
     "revision": "6a087d6e30fc0a06bdb45f803f36d1a5"
   }, {
     "url": "index.html",
-    "revision": "6b370546dd089a8244b470928ee9ba8a"
+    "revision": "5d5cc470354364f1906948595aabbaf6"
   }, {
     "url": "icon.svg",
     "revision": "e8b314fe2f97d54d5fe6eaee1ce1a60f"
@@ -126,7 +123,7 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
     "revision": "04cc98a9a0b453910c339f1bbff2bb98"
   }, {
     "url": "manifest.webmanifest",
-    "revision": "a3c0665f527ed3c2a8d34822e4a9a1b1"
+    "revision": "3beb89ba75570eea619a42015fbc7c56"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html")));
