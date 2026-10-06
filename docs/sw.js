@@ -77,6 +77,9 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
+    "url": "registerSW.js",
+    "revision": "402b66900e731ca748771b6fc5e7a068"
+  }, {
     "url": "pwa-maskable-512x512.png",
     "revision": "04cc98a9a0b453910c339f1bbff2bb98"
   }, {
@@ -87,7 +90,7 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
     "revision": "6a087d6e30fc0a06bdb45f803f36d1a5"
   }, {
     "url": "index.html",
-    "revision": "159396036e84f46c21bacb0e6f8cf0d0"
+    "revision": "1ff1d3078277082614fbba541eca994c"
   }, {
     "url": "icon.svg",
     "revision": "e8b314fe2f97d54d5fe6eaee1ce1a60f"
