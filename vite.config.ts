@@ -25,14 +25,14 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: ['apple-touch-icon.png', 'icon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
         manifest: {
-          id: './',
+          id: 'towing-controller-v2',
           name: 'トーインコントローラー',
           short_name: 'トーイン',
           description: 'マリンジェットを用いたトーイングアクティビティの予約管理',
           theme_color: '#0891b2',
           background_color: '#0891b2',
           display: 'standalone',
-          start_url: './',
+          start_url: './index.html',
           scope: './',
           icons: [
             {

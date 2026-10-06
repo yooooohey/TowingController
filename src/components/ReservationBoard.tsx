@@ -207,9 +207,9 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
 
   return (
     <div className="relative flex-1 w-full overflow-hidden bg-slate-950 flex flex-col">
-      {/* 4 columns layout: horizontally scrollable on small screens, 4 columns grid on larger */}
-      <div className="flex-1 w-full overflow-x-auto overflow-y-hidden">
-        <div className="grid grid-flow-col auto-cols-[minmax(270px,1fr)] sm:grid-cols-4 gap-2.5 sm:gap-3 p-2.5 sm:p-4 h-full min-w-full">
+      {/* 4 columns layout: fits 4 columns across screen on mobile, tablet, and desktop */}
+      <div className="flex-1 w-full overflow-hidden">
+        <div className="grid grid-cols-4 gap-1 sm:gap-2.5 md:gap-3 p-1 sm:p-2.5 md:p-4 h-full w-full">
           {columns.map((column, colIndex) => {
             const isColDropTarget =
               draggedCard !== null && hoveredColumnId === column.id;
@@ -218,14 +218,14 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
               <div
                 key={column.id}
                 ref={(el) => setColumnRef(column.id, el)}
-                className={`flex flex-col h-full rounded-2xl border transition-colors select-none ${
+                className={`flex flex-col h-full rounded-xl sm:rounded-2xl border transition-colors select-none min-w-0 ${
                   isColDropTarget
                     ? 'bg-cyan-950/30 border-cyan-400 ring-2 ring-cyan-400/40'
                     : 'bg-slate-900/90 border-cyan-900/30 shadow-lg'
                 }`}
               >
                 {/* Column Header (Staff name upper, Marine jet name lower) */}
-                <div className="px-3 pt-2">
+                <div className="px-1 sm:px-3 pt-1.5 sm:pt-2">
                   <ColumnHeader
                     columnIndex={colIndex}
                     staffName={column.staffName}
@@ -255,10 +255,10 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
 
                 {/* Reservation List: Each column independently vertically scrollable */}
                 {/* With pb-[75vh] so the bottom Add button is always easy to reach as requested */}
-                <div className="flex-1 overflow-y-auto px-2.5 sm:px-3 pt-3 space-y-2.5 overscroll-contain">
+                <div className="flex-1 overflow-y-auto px-1 sm:px-3 pt-1.5 sm:pt-3 space-y-1.5 sm:space-y-2.5 overscroll-contain">
                   {column.reservations.length === 0 ? (
-                    <div className="text-center py-8 px-2 rounded-xl border border-dashed border-slate-800 text-slate-500 text-xs">
-                      予約はありません
+                    <div className="text-center py-6 px-1 rounded-lg border border-dashed border-slate-800 text-slate-500 text-[10px] sm:text-xs">
+                      なし
                     </div>
                   ) : (
                     column.reservations.map((res) => (
@@ -274,13 +274,13 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
                   )}
 
                   {/* Add Button at bottom of column */}
-                  <div className="pt-2">
+                  <div className="pt-1 sm:pt-2">
                     <button
                       type="button"
                       onClick={() => onAddReservation(column.id)}
-                      className="w-full py-2.5 px-3 rounded-xl bg-slate-850 hover:bg-cyan-950/60 active:bg-cyan-900/80 border border-slate-700/80 hover:border-cyan-500/60 text-cyan-300 hover:text-cyan-200 text-xs font-bold flex items-center justify-center gap-1.5 transition active:scale-98 shadow-sm group"
+                      className="w-full py-1.5 sm:py-2.5 px-0.5 sm:px-3 rounded-lg sm:rounded-xl bg-slate-850 hover:bg-cyan-950/60 active:bg-cyan-900/80 border border-slate-700/80 hover:border-cyan-500/60 text-cyan-300 hover:text-cyan-200 text-[10px] sm:text-xs font-bold flex items-center justify-center gap-0.5 sm:gap-1.5 transition active:scale-98 shadow-xs sm:shadow-sm group"
                     >
-                      <Plus className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+                      <Plus className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
                       <span>＋ 追加</span>
                     </button>
                   </div>
@@ -297,19 +297,19 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
       {/* Floating Ghost Element during Drag */}
       {draggedCard && (
         <div
-          className="fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 w-64 shadow-2xl rounded-xl p-3 bg-slate-800/95 border-2 border-cyan-400 text-white opacity-95 scale-105 rotate-1"
+          className="fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 shadow-2xl rounded-xl p-2 sm:p-3 bg-slate-800/95 border-2 border-cyan-400 text-white opacity-95 scale-105 rotate-1"
           style={{
             left: `${pointerPos.x}px`,
             top: `${pointerPos.y}px`,
           }}
         >
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 font-mono font-bold text-base text-white">
-              <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
+          <div className="flex items-center justify-between gap-1.5">
+            <div className="flex items-center gap-1 font-mono font-bold text-xs sm:text-base text-white">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
               <span>{draggedCard.reservation.time}</span>
             </div>
             <div
-              className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-sm border ${
+              className={`w-5 h-5 sm:w-7 sm:h-7 rounded flex items-center justify-center font-black text-xs sm:text-sm border ${
                 MENU_DEFINITIONS[draggedCard.reservation.menu]?.bgColor || 'bg-yellow-400'
               } ${
                 MENU_DEFINITIONS[draggedCard.reservation.menu]?.textColor || 'text-slate-900'
@@ -318,12 +318,12 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
               {draggedCard.reservation.menu}
             </div>
           </div>
-          <div className="mt-2 flex items-center justify-between text-xs">
+          <div className="mt-1 sm:mt-2 flex items-center justify-between text-[10px] sm:text-xs">
             <span className="truncate font-semibold text-slate-200">
               {draggedCard.reservation.name || '（予約名なし）'}
             </span>
-            <div className="flex items-center gap-1 text-cyan-300 font-bold font-mono">
-              <Users className="w-3 h-3" />
+            <div className="flex items-center gap-0.5 text-cyan-300 font-bold font-mono">
+              <Users className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
               <span>{draggedCard.reservation.pax}名</span>
             </div>
           </div>

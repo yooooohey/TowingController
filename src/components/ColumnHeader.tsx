@@ -25,14 +25,14 @@ export const ColumnHeader: React.FC<ColumnHeaderProps> = ({
   onJetPointerDown,
 }) => {
   return (
-    <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md pb-2 pt-1 border-b border-cyan-800/40">
-      <div className="space-y-1.5">
+    <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md pb-1.5 pt-1 border-b border-cyan-800/40">
+      <div className="space-y-1">
         {/* Row 1: Staff Name (大文字) */}
         <div
           data-header-type="staff"
           data-column-index={columnIndex}
           onPointerDown={(e) => onStaffPointerDown?.(columnIndex, e)}
-          className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg border cursor-grab active:cursor-grabbing transition-all select-none shadow-xs ${
+          className={`flex items-center justify-between px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-md sm:rounded-lg border cursor-grab active:cursor-grabbing transition-all select-none shadow-xs ${
             isStaffDragSource
               ? 'opacity-30 border-dashed border-cyan-400 bg-cyan-950/40'
               : isStaffDropTarget
@@ -42,13 +42,13 @@ export const ColumnHeader: React.FC<ColumnHeaderProps> = ({
           title="ドラッグして他の列のスタッフ名と入れ替え"
           style={{ touchAction: 'none' }}
         >
-          <div className="flex items-center gap-1.5 min-w-0">
-            <User className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span className="font-black text-xs sm:text-sm tracking-wider text-white uppercase truncate">
+          <div className="flex items-center gap-1 min-w-0 flex-1">
+            <User className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-cyan-400 shrink-0" />
+            <span className="font-black text-[10px] sm:text-xs md:text-sm tracking-wide text-white uppercase truncate">
               {staffName.toUpperCase()}
             </span>
           </div>
-          <GripVertical className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+          <GripVertical className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-slate-500 shrink-0 opacity-60 sm:opacity-100" />
         </div>
 
         {/* Row 2: Marine Jet Name (小文字) */}
@@ -56,7 +56,7 @@ export const ColumnHeader: React.FC<ColumnHeaderProps> = ({
           data-header-type="jet"
           data-column-index={columnIndex}
           onPointerDown={(e) => onJetPointerDown?.(columnIndex, e)}
-          className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg border cursor-grab active:cursor-grabbing transition-all select-none shadow-xs ${
+          className={`flex items-center justify-between px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg border cursor-grab active:cursor-grabbing transition-all select-none shadow-xs ${
             isJetDragSource
               ? 'opacity-30 border-dashed border-cyan-400 bg-cyan-950/40'
               : isJetDropTarget
@@ -66,13 +66,13 @@ export const ColumnHeader: React.FC<ColumnHeaderProps> = ({
           title="ドラッグして他の列のマリンジェット名と入れ替え"
           style={{ touchAction: 'none' }}
         >
-          <div className="flex items-center gap-1.5 min-w-0">
-            <Ship className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
-            <span className="font-semibold text-xs tracking-wide text-cyan-200 lowercase truncate">
+          <div className="flex items-center gap-1 min-w-0 flex-1">
+            <Ship className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-cyan-500 shrink-0" />
+            <span className="font-semibold text-[9px] sm:text-[11px] md:text-xs tracking-tight text-cyan-200 lowercase truncate">
               {jetName.toLowerCase()}
             </span>
           </div>
-          <GripVertical className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+          <GripVertical className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-slate-500 shrink-0 opacity-60 sm:opacity-100" />
         </div>
       </div>
     </div>
