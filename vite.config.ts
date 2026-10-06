@@ -8,6 +8,17 @@ export default defineConfig(() => {
   return {
     base: './',
     plugins: [
+      {
+        name: 'vite-dev-html',
+        transformIndexHtml(html, ctx) {
+          if (ctx.server) {
+            return html
+              .replace(/<script type="module" crossorigin src="[^"]+"><\/script>/, '<script type="module" src="/src/main.tsx"></script>')
+              .replace(/<link rel="stylesheet" crossorigin href="[^"]+">/, '');
+          }
+          return html;
+        },
+      },
       react(),
       tailwindcss(),
       VitePWA({
@@ -56,6 +67,21 @@ export default defineConfig(() => {
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname || '.', '.'),
+      },
+    },
+    build: {
+      outDir: 'dist',
+      rollupOptions: {
+        output: {
+          entryFileNames: 'assets/app.js',
+          chunkFileNames: 'assets/[name].js',
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+              return 'assets/style.css';
+            }
+            return 'assets/[name].[ext]';
+          },
+        },
       },
     },
     server: {
