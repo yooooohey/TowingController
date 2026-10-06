@@ -11,7 +11,7 @@ const PORT = Number(process.env.PORT) || 3000;
 
 // API Health check
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', name: 'towin-controller', version: '1.6' });
+  res.json({ status: 'ok', name: 'towin-controller', version: '1.7' });
 });
 
 const distPath = path.resolve(__dirname, 'dist');

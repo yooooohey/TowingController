@@ -1,6 +1,6 @@
 {
   "name": "トーインコントローラー",
-  "description": "マリンジェットを用いたトーイングアクティビティの予約管理PWAアプリケーション",
+  "description": "マリンジェットを用いたトーイングアクティビティの予約管理PWAアプリケーション v1.7",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

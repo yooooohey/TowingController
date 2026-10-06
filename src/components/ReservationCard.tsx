@@ -86,23 +86,22 @@ export const ReservationCard: React.FC<ReservationCardProps> = ({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
-      className={`relative w-full rounded-lg sm:rounded-xl p-1.5 sm:p-2.5 select-none transition-all cursor-pointer border ${
+      className={`relative w-full rounded-md sm:rounded-lg p-1 sm:p-2 select-none transition-all cursor-pointer border ${
         isDragging
           ? 'opacity-30 scale-95 border-dashed border-cyan-400 bg-slate-800/40'
-          : 'bg-slate-800/90 hover:bg-slate-800 border-slate-700/80 hover:border-cyan-500/50 shadow-xs sm:shadow-md hover:shadow-cyan-950/40 active:scale-[0.98]'
+          : 'bg-slate-800/90 hover:bg-slate-800 border-slate-700/80 hover:border-cyan-500/50 shadow-xs hover:shadow-cyan-950/40 active:scale-[0.98]'
       }`}
       style={{ touchAction: 'pan-y' }}
     >
       {/* Top Row: Time & Menu badge */}
       <div className="flex items-center justify-between gap-1">
-        <div className="flex items-center gap-0.5 sm:gap-1.5 font-mono font-bold text-[11px] xs:text-xs sm:text-base text-white min-w-0">
-          <Clock className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-cyan-400 shrink-0" />
-          <span className="truncate">{reservation.time}</span>
+        <div className="font-mono font-bold text-xs sm:text-sm text-white min-w-0 tracking-tight">
+          {reservation.time}
         </div>
 
         {/* Menu badge: D (Yellow), M (Red), U (Blue), J (Green), X (Black) */}
         <div
-          className={`w-5 h-5 sm:w-7 sm:h-7 rounded flex items-center justify-center font-black text-[11px] sm:text-sm shadow-xs border shrink-0 ${menuInfo.bgColor} ${menuInfo.textColor} ${menuInfo.borderColor}`}
+          className={`w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center font-black text-xs shadow-xs border shrink-0 ${menuInfo.bgColor} ${menuInfo.textColor} ${menuInfo.borderColor}`}
           title={`${menuInfo.code}: ${menuInfo.description}`}
         >
           {menuInfo.code}
@@ -110,8 +109,8 @@ export const ReservationCard: React.FC<ReservationCardProps> = ({
       </div>
 
       {/* Bottom Row: Guest Name & Pax */}
-      <div className="mt-1 sm:mt-1.5 flex items-center justify-between gap-1 text-[9px] sm:text-xs">
-        <div className="truncate font-medium text-slate-200 min-w-0 flex-1">
+      <div className="mt-1 flex items-center justify-between gap-1 text-[10px] sm:text-xs">
+        <div className="truncate font-medium text-slate-200 min-w-0 flex-1 leading-tight">
           {reservation.name ? (
             <span className="text-white font-semibold truncate block">{reservation.name}</span>
           ) : (
@@ -119,9 +118,8 @@ export const ReservationCard: React.FC<ReservationCardProps> = ({
           )}
         </div>
 
-        <div className="flex items-center gap-0.5 shrink-0 px-1 sm:px-1.5 py-0.5 rounded bg-slate-900/80 border border-slate-700/80 text-cyan-300 font-bold font-mono">
-          <Users className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-cyan-400" />
-          <span>{reservation.pax}名</span>
+        <div className="shrink-0 text-cyan-300 font-bold font-mono text-[10px] sm:text-xs ml-0.5">
+          {reservation.pax}名
         </div>
       </div>
     </div>

@@ -209,7 +209,7 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
     <div className="relative flex-1 w-full overflow-hidden bg-slate-950 flex flex-col">
       {/* 4 columns layout: fits 4 columns across screen on mobile, tablet, and desktop */}
       <div className="flex-1 w-full overflow-hidden">
-        <div className="grid grid-cols-4 gap-1 sm:gap-2.5 md:gap-3 p-1 sm:p-2.5 md:p-4 h-full w-full">
+        <div className="grid grid-cols-4 gap-0.5 sm:gap-2 p-0.5 sm:p-2 md:p-3 h-full w-full">
           {columns.map((column, colIndex) => {
             const isColDropTarget =
               draggedCard !== null && hoveredColumnId === column.id;
@@ -218,14 +218,14 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
               <div
                 key={column.id}
                 ref={(el) => setColumnRef(column.id, el)}
-                className={`flex flex-col h-full rounded-xl sm:rounded-2xl border transition-colors select-none min-w-0 ${
+                className={`flex flex-col h-full rounded-lg sm:rounded-2xl border transition-colors select-none min-w-0 ${
                   isColDropTarget
                     ? 'bg-cyan-950/30 border-cyan-400 ring-2 ring-cyan-400/40'
                     : 'bg-slate-900/90 border-cyan-900/30 shadow-lg'
                 }`}
               >
                 {/* Column Header (Staff name upper, Marine jet name lower) */}
-                <div className="px-1 sm:px-3 pt-1.5 sm:pt-2">
+                <div className="px-0.5 sm:px-2 pt-1 sm:pt-1.5">
                   <ColumnHeader
                     columnIndex={colIndex}
                     staffName={column.staffName}
@@ -255,9 +255,9 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
 
                 {/* Reservation List: Each column independently vertically scrollable */}
                 {/* With pb-[75vh] so the bottom Add button is always easy to reach as requested */}
-                <div className="flex-1 overflow-y-auto px-1 sm:px-3 pt-1.5 sm:pt-3 space-y-1.5 sm:space-y-2.5 overscroll-contain">
+                <div className="flex-1 overflow-y-auto px-0.5 sm:px-2 pt-1 sm:pt-2 space-y-1 sm:space-y-2 overscroll-contain">
                   {column.reservations.length === 0 ? (
-                    <div className="text-center py-6 px-1 rounded-lg border border-dashed border-slate-800 text-slate-500 text-[10px] sm:text-xs">
+                    <div className="text-center py-6 px-1 rounded-md border border-dashed border-slate-800 text-slate-500 text-[10px] sm:text-xs">
                       なし
                     </div>
                   ) : (
@@ -274,13 +274,13 @@ export const ReservationBoard: React.FC<ReservationBoardProps> = ({
                   )}
 
                   {/* Add Button at bottom of column */}
-                  <div className="pt-1 sm:pt-2">
+                  <div className="pt-1">
                     <button
                       type="button"
                       onClick={() => onAddReservation(column.id)}
-                      className="w-full py-1.5 sm:py-2.5 px-0.5 sm:px-3 rounded-lg sm:rounded-xl bg-slate-850 hover:bg-cyan-950/60 active:bg-cyan-900/80 border border-slate-700/80 hover:border-cyan-500/60 text-cyan-300 hover:text-cyan-200 text-[10px] sm:text-xs font-bold flex items-center justify-center gap-0.5 sm:gap-1.5 transition active:scale-98 shadow-xs sm:shadow-sm group"
+                      className="w-full py-1 sm:py-2 px-0.5 sm:px-2 rounded-md sm:rounded-xl bg-slate-850 hover:bg-cyan-950/60 active:bg-cyan-900/80 border border-slate-700/80 hover:border-cyan-500/60 text-cyan-300 hover:text-cyan-200 text-[10px] sm:text-xs font-bold flex items-center justify-center gap-0.5 sm:gap-1.5 transition active:scale-98 shadow-xs group"
                     >
-                      <Plus className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+                      <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
                       <span>＋ 追加</span>
                     </button>
                   </div>

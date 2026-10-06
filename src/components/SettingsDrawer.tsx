@@ -332,7 +332,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({
             </ul>
 
             <div className="pt-2 text-center text-[10px] text-slate-500 font-mono">
-              トーインコントローラー {version ? `v${version}` : 'v1.6'} • PWA Ready
+              トーインコントローラー {version ? `v${version}` : 'v1.7'} • PWA Ready
             </div>
           </section>
         </div>

@@ -1,7 +1,8 @@
 import { TowInAppState, ColumnConfig, Reservation } from '../types';
 import { compareTimes } from './time';
 
-export const STORAGE_KEY = 'towInAppState_v16';
+export const STORAGE_KEY = 'towInAppState_v17';
+export const LEGACY_STORAGE_KEY = 'towInAppState_v16';
 
 export const DEFAULT_INITIAL_COLUMNS: ColumnConfig[] = [
   {
@@ -108,7 +109,7 @@ export const DEFAULT_INITIAL_COLUMNS: ColumnConfig[] = [
 
 export function getInitialAppState(): TowInAppState {
   return {
-    version: '1.6',
+    version: '1.7',
     swipeMinutes: 5,
     columns: DEFAULT_INITIAL_COLUMNS,
   };
@@ -154,7 +155,7 @@ function safeSetStorageItem(key: string, value: string): void {
  */
 export function loadAppState(): TowInAppState {
   try {
-    const raw = safeGetStorageItem(STORAGE_KEY);
+    const raw = safeGetStorageItem(STORAGE_KEY) || safeGetStorageItem(LEGACY_STORAGE_KEY);
     if (!raw) {
       return getInitialAppState();
     }
@@ -183,7 +184,7 @@ export function loadAppState(): TowInAppState {
     }
 
     return {
-      version: '1.6',
+      version: '1.7',
       swipeMinutes: parsed.swipeMinutes || 5,
       columns: safeColumns,
     };
