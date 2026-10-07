@@ -77,6 +77,9 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
+    "url": "template.html",
+    "revision": "0f1fca26e1c23746343e081e5f427ca3"
+  }, {
     "url": "pwa-maskable-512x512.png",
     "revision": "04cc98a9a0b453910c339f1bbff2bb98"
   }, {
@@ -85,9 +88,6 @@ define(['./workbox-7e5eb42b'], (function (workbox) { 'use strict';
   }, {
     "url": "pwa-192x192.png",
     "revision": "6a087d6e30fc0a06bdb45f803f36d1a5"
-  }, {
-    "url": "index.html",
-    "revision": "5d5cc470354364f1906948595aabbaf6"
   }, {
     "url": "icon.svg",
     "revision": "e8b314fe2f97d54d5fe6eaee1ce1a60f"

@@ -10,6 +10,7 @@ export default defineConfig(() => {
     plugins: [
       {
         name: 'vite-dev-html',
+        apply: 'serve',
         transformIndexHtml(html) {
           return html
             .replace(/<script type="module"[^>]*src="[^"]*app\.js"[^>]*><\/script>/, '<script type="module" src="/src/main.tsx"></script>')
@@ -71,6 +72,9 @@ export default defineConfig(() => {
     build: {
       outDir: 'dist',
       rollupOptions: {
+        input: {
+          main: path.resolve(import.meta.dirname || '.', 'template.html'),
+        },
         output: {
           entryFileNames: 'assets/app.js',
           chunkFileNames: 'assets/[name].js',
